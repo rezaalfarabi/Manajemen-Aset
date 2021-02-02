@@ -83,7 +83,7 @@
             </ul>
              <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('pegawai')}}" class="nav-link">
+                <a href="{{route('data-aset')}}" class="nav-link">
                 <i class="fa fa-server" aria-hidden="true"></i>
                   <p>Data Aset</p>
                 </a>

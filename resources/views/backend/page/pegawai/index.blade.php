@@ -14,11 +14,11 @@
                     <h3>Data Pegawai</h3>
                 </div>
                 <div class="float-right">
-                    <button type="button" onclick="add()" class="btn btn-outline-success"> <i class="fa fa-plus"> </i> Add </button>
+                    <button type="button" onclick="add()" class="btn btn-success btn-sm"> <i class="fa fa-plus"> </i> Add </button>
                 </div>
             </div>
             <div class="card-body">
-                <table class='table table-hover'>
+                <table id="example1" class="table table-bordered table-hover table-response">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -45,9 +45,9 @@
                                     '{{$pegawai->email}}',
                                     '{{$pegawai->nik}}',
                                     '{{$pegawai->username}}'
-                                )" class="btn btn-warning"><i class="fa fa-edit"></i> Edit</button>
+                                )" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                 <!-- hapus data -->
-                                <a href="{{route('delete-pegawai', encrypt($pegawai->id_pegawai))}}" class="btn btn-danger" onclick="return confirm('Yakin mau di hapus ?')"><i class="fa fa-trash"></i> Delete</a>
+                                <a href="{{route('delete-pegawai', encrypt($pegawai->id_pegawai))}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau di hapus ?')"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                           
                         </tr>

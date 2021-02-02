@@ -20,9 +20,6 @@ Route::post('/aksilogin', 'LoginController@login')->name('aksilogin')->middlewar
 
 // middleware sudah login
 Route::middleware(['sudah_login'])->group(function() {
-    // Route::get('/', function () {
-    //     return view('backend.home');
-    // });
     Route::get('/pegawai', 'PegawaiController@index')->name('pegawai');
     Route::post('/add-pegawai', 'PegawaiController@add')->name('add-pegawai');
     Route::get('/delete-pegawai/{id_pegawai}', 'PegawaiController@delete')->name('delete-pegawai');
@@ -44,6 +41,13 @@ Route::middleware(['sudah_login'])->group(function() {
     Route::post('/satuan-add', 'SatuanController@save')->name('satuan-add');
     Route::get('/delete-satuan/{satuan_id}', 'SatuanController@delete')->name('delete-satuan');
 
+    // Data Aset
+    Route::get('/data-aset', 'AsetController@index')->name('data-aset');
+    Route::get('/data-aset-hapus/{id}', 'AsetController@hapus')->name('data-aset-hapus');
+    Route::get('/data-aset-status/{id}/{status}', 'AsetController@status')->name('data-aset-status');
+    Route::post('/data-aset-simpan', 'AsetController@save')->name('data-aset-simpan');
+    
+    
 });
 
 

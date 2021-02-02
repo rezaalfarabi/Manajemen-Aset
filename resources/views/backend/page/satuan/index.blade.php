@@ -16,12 +16,12 @@
                 </div>
 
                 <div class="float-right">
-                    <button onclick="add()" type='button' class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
+                    <button onclick="add()" type='button' class="badge badge-primary"><i class="fa fa-plus"></i> Add</button>
                 </div>
             </div>
 
             <div class="card-body">
-                <table class="table table-hover">
+                <table id="example1" class="table table-bordered table-striped table-response">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -38,8 +38,8 @@
                                 <button onclick="update(
                                     '{{$satuan->satuan_id}}',
                                     '{{$satuan->satuan_nama}}'
-                                )" type="button" class="btn btn-warning"><i class="fa fa-edit"></i>Edit</button>
-                                <a href="{{route('delete-satuan', encrypt($satuan->satuan_id))}}" class="btn btn-danger" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
+                                )" type="button" class="badge badge-success"><i class="fa fa-edit"></i>Edit</button>
+                                <a href="{{route('delete-satuan', encrypt($satuan->satuan_id))}}" class="badge badge-danger" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                     @endforeach

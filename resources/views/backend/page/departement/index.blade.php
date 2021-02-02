@@ -21,7 +21,7 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-hover">
+            <table id="example1" class="table table-bordered table-hover table-response">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -38,8 +38,8 @@
                                 <button onclick="update(
                                     '{{$departement->departement_id}}',
                                     '{{$departement->departement_nama}}'
-                                )" type="button" class="btn btn-warning"><i class="fa fa-edit"></i>Edit</button>
-                                <a href="{{route('delete-departement', encrypt($departement->departement_id))}}" class="btn btn-danger" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
+                                )" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</button>
+                                <a href="{{route('delete-departement', encrypt($departement->departement_id))}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                     @endforeach
