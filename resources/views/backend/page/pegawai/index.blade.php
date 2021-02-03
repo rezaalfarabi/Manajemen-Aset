@@ -47,9 +47,10 @@
                                     '{{$pegawai->username}}'
                                 )" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                 <!-- hapus data -->
-                                <a href="{{route('delete-pegawai', encrypt($pegawai->id_pegawai))}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau di hapus ?')"><i class="fa fa-trash"></i> Delete</a>
+                                <!-- <a href="{{route('delete-pegawai', encrypt($pegawai->id_pegawai))}}" class="btn btn-danger btn-sm delete" pegawai-id='{{$pegawai->id_pegawai}}'><i class="fa fa-trash"></i> Delete</a> -->
+                                <button type="button" onclick="hapus('{{$pegawai->id_pegawai}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
                             </td>
-                          
+                            
                         </tr>
                     @endforeach
                     </tbody>
@@ -115,16 +116,17 @@
     </div>
 </div>
 
-
+<!-- fungsi untuk show dan hide status pesan -->
 @if(session('pesan'))
 <script>
     $('#pesan').show()
     setInterval(function() {
         $('#pesan').hide()
-    }, 2000);
+    }, 3000);
 </script>
 @endif
 
+<!-- Fungsi Untuk Menambah data Pegawai menggunakan jquery -->
 <script>
     function add() {
         $('#pegawaiAdd').modal()
@@ -140,4 +142,58 @@
         $('#pegawaiAdd').modal()
     }
 </script>
+
+<!-- Fungsi untuk notifikasi menggunakan sweet alert menggunakan jquery -->
+<!-- <script>
+    $('.delete').click(function() {      
+        var pegawai_id = $(this).attr('pegawai-id')
+        // alert(pegawai_id)
+        Swal.fire({
+            title: 'Anda Yakin?',
+            text: 'ingin Menghapus data dengan id '+ pegawai_id + ' ??',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                console.log(result)
+            if (result) {
+                window.location = ("/delete-pegawai/'+ id_pegawai + '");
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+            
+    })
+})
+</script> -->
+
+<script>
+   function hapus(id) {      
+        Swal.fire({
+            title: 'Anda Yakin?',
+            text: 'ingin Menghapus data dengan id '+ id,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then(function(result){
+                console.log(result)
+            if (result) {
+                window.location = "/delete-pegawai/"+ id;
+                    Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+            
+    })
+})
+</script>
 @endsection
+ 

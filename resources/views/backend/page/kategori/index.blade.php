@@ -85,21 +85,24 @@
 </div>
 
 
+<!-- fungsi untuk menampilkan/hidden dan set interval status dengan menggunakan bootstrap alert  -->
 @if(session('pesan'))
 <script>
     $('#pesan').show()
     setInterval(function() {
         $('#pesan').hide()
-    }, 2000);
+    }, 3000);
 </script>
 @endif
 
+<!-- fungsi untuk menambah data dengan menggunakan jquery -->
 <script>
     function add() 
     {
         $('#kategoriAdd').modal();
     }
 
+    // fungsi untuk mengubah data dengan menggunakan jquery
     function update(id, nama) 
     {
         // alert(nama)

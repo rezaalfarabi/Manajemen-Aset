@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="float-right">
-                    <button onclick="add()" type='button' class="badge badge-primary"><i class="fa fa-plus"></i> Add</button>
+                    <button onclick="add()" type='button' class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add</button>
                 </div>
             </div>
 
@@ -38,8 +38,8 @@
                                 <button onclick="update(
                                     '{{$satuan->satuan_id}}',
                                     '{{$satuan->satuan_nama}}'
-                                )" type="button" class="badge badge-success"><i class="fa fa-edit"></i>Edit</button>
-                                <a href="{{route('delete-satuan', encrypt($satuan->satuan_id))}}" class="badge badge-danger" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
+                                )" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</button>
+                                <a href="{{route('delete-satuan', encrypt($satuan->satuan_id))}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -84,22 +84,24 @@
     </div>
 </div>
 
-
+<!-- fungsi untuk menampilkan dan hidden notifikasi -->
 @if(session('pesan'))
 <script>
     $('#pesan').show()
     setInterval(function() {
         $('#pesan').hide()
-    }, 2000);
+    }, 3000);
 </script>
 @endif
 
+<!-- fungsi untuk menambah data dengan menggunakan jquery -->
 <script>
     function add() 
     {
         $('#satuanAdd').modal();
     }
 
+    // fungsi untuk update data dengan menggunakan jquery
     function update(id, nama) 
     {
         // alert(nama)

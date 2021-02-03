@@ -173,6 +173,7 @@
 </div>
 
 
+<!-- fungsi untuk menampilkan dan hidden & setinterval dengan menggunakan bootstrap alert -->
 @if(session('pesan'))
 <script>
     $('#pesan').show()
@@ -182,12 +183,14 @@
 </script>
 @endif
 
+<!-- fungsi untuk menambah data dengan menggunakan jquery -->
 <script>
     function add() 
     {
         $('#asetAdd').modal();
     }
 
+// fungsi untuk mengubah data dengan menggunakan vanilla javascript
     function update(id, kode, tanggal, kategori, departement, satuan, qty, nama_barang, nama_pegawai) 
     {
         // alert(nama)

@@ -1,7 +1,8 @@
 <!-- jQuery min js -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- sweet alert -->
-<script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
+<!-- <script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -47,6 +48,7 @@
 <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
 
 <script>
   $(document).ready(function() {
