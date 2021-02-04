@@ -25,7 +25,6 @@ Route::middleware(['sudah_login'])->group(function() {
     Route::get('/delete-pegawai/{id_pegawai}', 'PegawaiController@delete')->name('delete-pegawai');
     Route::get('/logout', 'LoginController@logout')->name('logout');
 
-
     // kategori
     Route::get('/kategori', 'KategoriController@index')->name('kategori');
     Route::post('/kategori-add', 'KategoriController@save')->name('kategori-add');
@@ -43,9 +42,12 @@ Route::middleware(['sudah_login'])->group(function() {
 
     // Data Aset
     Route::get('/data-aset', 'AsetController@index')->name('data-aset');
-    Route::get('/data-aset-hapus/{id}', 'AsetController@hapus')->name('data-aset-hapus');
+    Route::post('/data-aset-hapus', 'AsetController@hapus');
     Route::get('/data-aset-status/{id}/{status}', 'AsetController@status')->name('data-aset-status');
     Route::post('/data-aset-simpan', 'AsetController@save')->name('data-aset-simpan');
+    // tampil data table
+    Route::get('/data-table', 'AsetController@datatable');
+
     
     
 });
