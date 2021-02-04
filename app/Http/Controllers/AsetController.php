@@ -27,14 +27,14 @@ class AsetController extends Controller
         if($id == '') 
         {
             $simpan = DB::table('tb_aset')->insert([
-                'kode_barang' => $r->kode_barang, 
-                'tanggal_masuk' => $r->tanggal_masuk,
+                'nama_aset' => $r->nama_aset, 
+                'serial_number' => $r->serial_number,
                 'kategori_id' => $r->kategori_id,
-                'departement_id' => $r->departement_id,
-                'satuan_id' => $r->satuan_id,
+                'tanggal_pembuatan' => $r->tanggal_pembuatan,
                 'qty' => $r->qty,
-                'nama_barang' => $r->nama_barang,
+                'satuan_id' => $r->satuan_id,
                 'nama_pegawai' => $r->nama_pegawai,
+                'departement_id' => $r->departement_id,
                 'status' => 0
             ]);
 
@@ -46,14 +46,14 @@ class AsetController extends Controller
             }
         } else {
             $update = DB::table('tb_aset')->where('id_aset', $id)->update([
-                'kode_barang' => $r->kode_barang, 
-                'tanggal_masuk' => $r->tanggal_masuk,
+                'nama_aset' => $r->nama_aset, 
+                'serial_number' => $r->serial_number,
                 'kategori_id' => $r->kategori_id,
-                'departement_id' => $r->departement_id,
-                'satuan_id' => $r->satuan_id,
+                'tanggal_pembuatan' => $r->tanggal_pembuatan,
                 'qty' => $r->qty,
-                'nama_barang' => $r->nama_barang,
-                'nama_pegawai' => $r->nama_pegawai
+                'satuan_id' => $r->satuan_id,
+                'nama_pegawai' => $r->nama_pegawai,
+                'departement_id' => $r->departement_id,
             ]);
 
             if($update == true) 
