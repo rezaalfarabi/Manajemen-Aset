@@ -15,16 +15,16 @@ class CreateAsetModelsTable extends Migration
     {
         Schema::create('tb_aset', function (Blueprint $table) {
             $table->id('id_aset');
-            $table->string('kode_barang');
-            $table->date('tanggal_masuk');
+            $table->string('nama_aset');
+            $table->string('serial_number')->nullable();
+            $table->date('tanggal_pembuatan')->nullable();
             $table->integer('kategori_id');
-            $table->integer('departement_id');
-            $table->integer('satuan_id');
             $table->integer('qty');
-            $table->string('nama_barang');
-            $table->string('nama_pegawai');
+            $table->integer('satuan_id');
+            $table->string('nama_pegawai')->nullable();
+            $table->integer('departement_id');
             $table->integer('status')->nullable();
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

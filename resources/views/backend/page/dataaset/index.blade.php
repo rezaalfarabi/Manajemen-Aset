@@ -21,18 +21,18 @@
             </div>
 
             <div class="card-body">
-                <table id="example1" class="table table-bordered table-hover table-response">
+                <table id="example1" class="table table-bordered table-striped table-response">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode Barang</th>
-                            <th>Tanggal Masuk</th>
+                            <th>Nama Aset</th>
+                            <th>Serial Number</th>
                             <th>Kategori</th>
-                            <th>Department</th>
-                            <th>Satuan Unit</th>
+                            <th>Tanggal/Tahun pembuatan</th>
                             <th>Qty</th>
-                            <th>Nama Barang</th>
+                            <th>Satuan </th>
                             <th>Nama Pegawai</th>
+                            <th>Department/Lokasi</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -41,33 +41,33 @@
                     @foreach($aset as $no => $aset)
                         <tr>
                             <td>{{$no+1}}</td>
-                            <td>{{$aset->kode_barang}}</td>
-                            <td>{{$aset->tanggal_masuk}}</td>
+                            <td>{{$aset->nama_aset}}</td>
+                            <td>{{$aset->serial_number}}</td>
                             <td>{{$aset->kategori_nama}}</td>
-                            <td>{{$aset->departement_nama}}</td>
-                            <td>{{$aset->satuan_nama}}</td>
+                            <td>{{$aset->tanggal_pembuatan}}</td>
                             <td>{{$aset->qty}}</td>
-                            <td>{{$aset->nama_barang}}</td>
+                            <td>{{$aset->satuan_nama}}</td>
                             <td>{{$aset->nama_pegawai}}</td>
+                            <td>{{$aset->departement_nama}}</td>
                             <td>
                                 @if($aset->status == 0)
-                                    <a href="{{ route('data-aset-status', [ $aset->id_aset, 1]) }}" class="fa fa-times-circle badge badge-danger"> Inactive</a>
+                                    <a href="{{ route('data-aset-status', [ $aset->id_aset, 1]) }}" class="fa fa-times-circle badge badge-danger"> Belum Tersedia</a>
                                     @else
-                                    <a href="{{route('data-aset-status', [$aset->id_aset, 0])}}" class="fa fa-check-circle badge badge-success"> Active</a>
+                                    <a href="{{route('data-aset-status', [$aset->id_aset, 0])}}" class="fa fa-check-circle badge badge-success"> Tersedia</a>
                                 @endif
                             </td>
                             
                             <td>
                                 <button onclick="update(
                                     '{{$aset->id_aset}}',
-                                    '{{$aset->kode_barang}}',
-                                    '{{$aset->tanggal_masuk}}',
+                                    '{{$aset->nama_aset}}',
+                                    '{{$aset->serial_number}}',
                                     '{{$aset->kategori_id}}',
-                                    '{{$aset->departement_id}}',
-                                    '{{$aset->satuan_id}}',
+                                    '{{$aset->tanggal_pembuatan}}',
                                     '{{$aset->qty}}',
-                                    '{{$aset->nama_barang}}',
+                                    '{{$aset->satuan_id}}',
                                     '{{$aset->nama_pegawai}}',
+                                    '{{$aset->departement_id}}',
                                 )" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</button>
                                 <a href="{{route('data-aset-hapus', $aset->id_aset)}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
                             </td>
@@ -100,51 +100,15 @@
                     <!-- kiri -->
                       <div class="col-md-6">
                       <input type="hidden" name="id_aset" id="id_aset">
+
                         <div class="form-group">
-                            <label for="">Kode Barang</label>
-                            <input type="text" name="kode_barang" id="kode_barang" class="form-control" placeholder="Kode Barang"> 
+                            <label for="">Nama Aset</label>
+                            <input type="text" name="nama_aset" id="nama_aset" class="form-control" placeholder="Nama Aset"> 
                         </div>
 
                         <div class="form-group">
-                            <label for="">Kategori</label>
-                            <select name="kategori_id" id="kategori_id" class="form-control">
-                                <option value="">-Select-</option>
-                                @foreach($kategori as $kategori)
-                                <option value="{{$kategori->kategori_id}}">{{$kategori->kategori_nama}}</option>
-                                @endforeach
-                            </select> 
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Satuan Unit</label>
-                            <select name="satuan_id" id="satuan_id" class="form-control">
-                                <option value="">-Select-</option>
-                                @foreach($satuan as $satuan)
-                                <option value="{{$satuan->satuan_id}}">{{$satuan->satuan_nama}}</option>
-                                @endforeach
-                            </select> 
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Nama Barang</label>
-                            <input type="text" name="nama_barang" id="nama_barang" class="form-control" placeholder="Nama barang"> 
-                        </div>
-                      </div>
-                    <!-- kanan -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="">Tanggal Masuk</label>
-                            <input type="date" name="tanggal_masuk" id="tanggal_masuk" class="form-control" placeholder="Tanggal Masuk"> 
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Department</label>
-                            <select name="departement_id" id="departement_id" class="form-control">
-                                <option value="">-Select-</option>
-                                @foreach($departement as $departement)
-                                <option value="{{$departement->departement_id}}">{{$departement->departement_nama}}</option>
-                                @endforeach
-                            </select> 
+                            <label for="">Serial Number</label>
+                            <input type="text" name="serial_number" id="serial_number" class="form-control" placeholder="Serial Number"> 
                         </div>
 
                         <div class="form-group">
@@ -155,6 +119,43 @@
                         <div class="form-group">
                             <label for="">Nama Pegawai</label>
                             <input type="text" name="nama_pegawai" id="nama_pegawai" class="form-control" placeholder="Nama Pegawai"> 
+                        </div>
+                      </div>
+                    <!-- kanan -->
+                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Tanggal/Tahun Pembuatan</label>
+                            <input type="date" name="tanggal_pembuatan" id="tanggal_pembuatan" class="form-control"  placeholder="Pilih Tanggal"> 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Kategori</label>
+                            <select name="kategori_id" id="kategori_id" class="form-control">
+                                <option value="">-- Pilih --</option>
+                                @foreach($kategori as $kategori)
+                                <option value="{{$kategori->kategori_id}}">{{$kategori->kategori_nama}}</option>
+                                @endforeach
+                            </select> 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Satuan </label>
+                            <select name="satuan_id" id="satuan_id" class="form-control">
+                                <option value="">-- Pilih --</option>
+                                @foreach($satuan as $satuan)
+                                <option value="{{$satuan->satuan_id}}">{{$satuan->satuan_nama}}</option>
+                                @endforeach
+                            </select> 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Department/Lokasi</label>
+                            <select name="departement_id" id="departement_id" class="form-control">
+                                <option value="">-- Pilih --</option>
+                                @foreach($departement as $departement)
+                                <option value="{{$departement->departement_id}}">{{$departement->departement_nama}}</option>
+                                @endforeach
+                            </select> 
                         </div>
                      </div>
                     </div>
@@ -179,7 +180,7 @@
     $('#pesan').show()
     setInterval(function() {
         $('#pesan').hide()
-    }, 2000);
+    }, 4000);
 </script>
 @endif
 
@@ -191,20 +192,21 @@
     }
 
 // fungsi untuk mengubah data dengan menggunakan vanilla javascript
-    function update(id, kode, tanggal, kategori, departement, satuan, qty, nama_barang, nama_pegawai) 
+    function update(id, nama_aset, serial_number, kategori, tanggal_pembuatan, qty, satuan, nama_pegawai, departement) 
     {
         // alert(nama)
         document.getElementById('id_aset').value = id;
-        document.getElementById('kode_barang').value = kode;
-        document.getElementById('tanggal_masuk').value = tanggal;
+        document.getElementById('nama_aset').value = nama_aset;
+        document.getElementById('serial_number').value = serial_number;
         document.getElementById('kategori_id').value = kategori;
-        document.getElementById('departement_id').value = departement;
-        document.getElementById('satuan_id').value = satuan;
+        document.getElementById('tanggal_pembuatan').value = tanggal_pembuatan;
         document.getElementById('qty').value = qty;
-        document.getElementById('nama_barang').value = nama_barang;
+        document.getElementById('satuan_id').value = satuan;
         document.getElementById('nama_pegawai').value = nama_pegawai;
+        document.getElementById('departement_id').value = departement;
         $('#asetAdd').modal();
     }
 </script>
+
 @endsection
 

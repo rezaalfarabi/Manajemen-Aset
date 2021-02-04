@@ -13,7 +13,7 @@ class AdminSeeder extends Seeder
     {
         $data = [
             [
-                "username" => "admin",
+                "username" => "admin", 
                 "password" => Hash::make("admin"),
                 "nama_lengkap" => "Administrator"
             ]

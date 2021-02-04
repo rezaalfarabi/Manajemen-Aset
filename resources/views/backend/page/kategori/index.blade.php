@@ -21,7 +21,7 @@
             </div>
 
             <div class="card-body">
-                 <table id="example1" class="table table-bordered table-hover table-response">
+                 <table id="example1" class="table table-bordered table-striped table-response">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -91,7 +91,7 @@
     $('#pesan').show()
     setInterval(function() {
         $('#pesan').hide()
-    }, 3000);
+    }, 4000);
 </script>
 @endif
 

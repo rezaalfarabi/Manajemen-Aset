@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <table id="example1" class="table table-bordered table-hover table-response">
+                <table id="example1" class="table table-bordered table-striped table-response">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -47,8 +47,8 @@
                                     '{{$pegawai->username}}'
                                 )" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                 <!-- hapus data -->
-                                <!-- <a href="{{route('delete-pegawai', encrypt($pegawai->id_pegawai))}}" class="btn btn-danger btn-sm delete" pegawai-id='{{$pegawai->id_pegawai}}'><i class="fa fa-trash"></i> Delete</a> -->
-                                <button type="button" onclick="hapus('{{$pegawai->id_pegawai}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
+                                <a href="{{route('delete-pegawai', encrypt($pegawai->id_pegawai))}}" class="btn btn-danger btn-sm" onclick="return confirm('Anda yakin menghapus data ini ??')"><i class="fa fa-trash"></i> Delete</a>
+                                <!-- <button type="button" onclick="hapus('{{$pegawai->id_pegawai}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button> -->
                             </td>
                             
                         </tr>
@@ -122,7 +122,7 @@
     $('#pesan').show()
     setInterval(function() {
         $('#pesan').hide()
-    }, 3000);
+    }, 4000);
 </script>
 @endif
 
@@ -171,7 +171,7 @@
 })
 </script> -->
 
-<script>
+<!-- <script>
    function hapus(id) {      
         Swal.fire({
             title: 'Anda Yakin?',
@@ -194,6 +194,6 @@
             
     })
 })
-</script>
+</script> -->
 @endsection
  
