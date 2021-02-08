@@ -65,9 +65,13 @@
                       </div>
                     <!-- kanan -->
                      <div class="col-md-6">
+                     <!-- <select id='date-dropdown'></select> -->
+
                         <div class="form-group">
-                            <label for="">Tanggal/Tahun Pembuatan</label>
-                            <input type="date" name="tanggal_pembuatan" id="tanggal_pembuatan" class="form-control  "  placeholder="Pilih Tanggal"> 
+                            <label for="">Tahun Pembuatan</label>
+                            <select name="tahun_pengadaan" id="tahun_pengadaan"  class="form-control">
+                                <option>-- Pilih --</option>
+                            </select> 
                         </div>
 
                         <div class="form-group">
@@ -104,11 +108,11 @@
                    
                     <div align="right">
                         <button type="button" onclick="save()" class="btn btn-outline-primary">Save</button>
-                        <button type="reset" class="btn btn-outline-warning">Reset</button>
+                        <button type="button" onclick="kosong()" class="btn btn-outline-warning">Reset</button>
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="kosong()" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -137,14 +141,14 @@
     }
 
 // fungsi untuk mengubah data dengan menggunakan vanilla javascript
-    function update(id, nama_aset, serial_number, kategori, tanggal_pembuatan, qty, satuan, nama_pegawai, departement) 
+    function update(id, nama_aset, serial_number, kategori, tahun_pengadaan, qty, satuan, nama_pegawai, departement) 
     {
         // alert(nama)
         document.getElementById('id_aset').value = id;
         document.getElementById('nama_aset').value = nama_aset;
         document.getElementById('serial_number').value = serial_number;
         document.getElementById('kategori_id').value = kategori;
-        document.getElementById('tanggal_pembuatan').value = tanggal_pembuatan;
+        document.getElementById('tahun_pengadaan').value = tahun_pengadaan;
         document.getElementById('qty').value = qty;
         document.getElementById('satuan_id').value = satuan;
         document.getElementById('nama_pegawai').value = nama_pegawai;
@@ -152,6 +156,7 @@
         $('#asetAdd').modal();
     }
 
+    // fungsi untuk simpan data aset menggunakan jquery ajax
     function save()
     {
         var id_aset = $('#id_aset').val()
@@ -159,7 +164,7 @@
         var serial_number = $('#serial_number').val()
         var qty = $('#qty').val()
         var nama_pegawai = $('#nama_pegawai').val()
-        var tanggal_pembuatan = $('#tanggal_pembuatan').val()
+        var tahun_pengadaan = $('#tahun_pengadaan').val()
         var kategori_id = $('#kategori_id').val()
         var satuan_id = $('#satuan_id').val()
         var departement_id = $('#departement_id').val()
@@ -174,7 +179,7 @@
                 'serial_number': serial_number,
                 'qty': qty,
                 'nama_pegawai': nama_pegawai,
-                'tanggal_pembuatan': tanggal_pembuatan,
+                'tahun_pengadaan': tahun_pengadaan,
                 'kategori_id': kategori_id,
                 'satuan_id': satuan_id,
                 'departement_id': departement_id,
@@ -182,38 +187,19 @@
             dataType: 'JSON',
             success: function(data)
             {
-                if(data.status == 200)
-                {
-                    $('#asetAdd').modal('hide');
-                    $('#isi').load('/data-table');
-                    kosong()
-                }
+                // console.log(data)
+                $('#asetAdd').modal('hide');
+                $('#isi').load('/data-table');
+                    toastr.success(data.message, data.title, {
+                    delay: 5000,
+                    fadeOut: 4000,
+                });
+                kosong()
             }
         })
     }
 
-    function hapus(id_aset)
-    {
-        $.ajax({
-            url: '/data-aset-hapus',
-            type: 'POST',
-            data: {
-                'id_aset':id_aset,
-                '_token': '{{ csrf_token() }}'
-                },
-            dataType: 'JSON',
-            success: function(data)
-            {
-                if(data.status == 200)
-                {
-                    $('#isi').load('/data-table');
-                }else{
-
-                }
-            }
-        })
-    }
-
+    // fungsi untuk clear input
     function kosong()
     {
         $('#id_aset').val('')
@@ -221,12 +207,111 @@
         $('#serial_number').val('')
         $('#qty').val('')
         $('#nama_pegawai').val('')
-        $('#tanggal_pembuatan').val('')
+        $('#tahun_pengadaan').val('')
         $('#kategori_id').val('')
         $('#satuan_id').val('')
         $('#departement_id').val('')
     }
-</script>
 
+// fungsi untuk melihat status menggunakan jquery ajax
+    function status(id_aset, status) 
+    {
+        $.ajax({
+            url: '/data-aset-status',
+            type: 'post',
+            data: {
+                'id_aset' : id_aset,
+                'status' : status,
+                '_token' : '{{ csrf_token() }}'
+            },
+            dataType : 'json',
+            success : function(data) 
+            {
+                $('#isi').load('/data-table');
+                    toastr.success(data.message, data.title, {
+                    delay: 5000,
+                    fadeOut: 4000,
+                });
+            }
+            
+        })
+    } 
+
+    // fungsi untuk menghapus data menggunakan sweet alert dan toast js
+    // function deleteConfirmation(id_aset) {
+    //     swal({
+    //         title: "Hapus?",
+    //         text: "Anda yakin ingin menghapus data ini?",
+    //         type: "warning",
+    //         showCancelButton: !0,
+    //         confirmButtonText: "Ya, Hapus!",
+    //         cancelButtonText: "Tidak, Batalkan!",
+    //         reverseButtons: !0
+    //     }).then(function (e) {
+    //         if (e.value === true) {
+    //             // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    //             $.ajax({
+    //                 type: 'POST',
+    //                 url: "{{url('/hapus')}}/" + id_aset,
+    //                 data: {'_token': '{{ csrf_token() }}'},
+    //                 dataType: 'JSON',
+    //                 success: function (data) {
+    //                     console.log(data)
+    //                     if (data.success === true) {
+    //                         swal("Done!", data.message, "success");
+    //                     } else {
+    //                         swal("Error!", data.message, "error");
+    //                     }
+                        
+    //                     toastr.success(data.message, data.title, {
+    //                         delay: 5000,
+    //                         fadeOut: 4000,
+    //                     }); 
+    //                     $('#isi').load('/data-table');
+    //                 }
+    //             });
+
+    //         } else {
+    //             e.dismiss;
+    //         }
+
+    //     }, function (dismiss) {
+    //         return false;
+    //     })
+    // }
+
+    function hapus(id_aset) {
+        $.ajax({
+            url : '/data-aset-hapus',
+            type : 'POST',
+            data : {
+                '_token' : '{{ csrf_token() }}',
+                'id_aset' : id_aset
+            },
+            dataType : 'JSON',
+            success : function(data) {
+                console.log(data)
+                toastr.success(data.message, data.title, {
+                            delay: 5000,
+                            fadeOut: 4000,
+                        }); 
+                $('#isi').load('/data-table')
+            }
+        })
+    }
+
+    // fungsi untuk menampilkan tahun
+    let dateDropdown = document.getElementById('tahun_pengadaan'); 
+        let currentYear = new Date().getFullYear();    
+        let earliestYear = 1970;     
+        while (currentYear >= earliestYear) {      
+        let dateOption = document.createElement('option');          
+        dateOption.text = currentYear;      
+        dateOption.value = currentYear;        
+        dateDropdown.add(dateOption);      
+        currentYear -= 1;    
+   }
+</script>
 @endsection
 

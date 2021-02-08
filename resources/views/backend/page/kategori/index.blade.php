@@ -3,11 +3,6 @@
 @section('content')
     <div class="row py-2">
         <div class="col-md-12">
-        @if(session('pesan'))
-            <div style="display:none" id="pesan" class="alert alert-success">
-            {{session('pesan')}}
-            </div>
-        @endif
         <div class="card card-outline card-primary">
             <div class="card-header">
                 
@@ -20,32 +15,7 @@
                 </div>
             </div>
 
-            <div class="card-body">
-                 <table id="example1" class="table table-bordered table-striped table-response">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Kategori</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($kategori as $no => $kategori)
-                        <tr>
-                            <td>{{$no+1}}</td>
-                            <td>{{$kategori->kategori_nama}}</td>
-                            <td>
-                                <button onclick="update(
-                                    '{{$kategori->kategori_id}}',
-                                    '{{$kategori->kategori_nama}}'
-                                )" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</button>
-                                <a href="{{route('delete-kategori', encrypt($kategori->kategori_id))}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <div class="card-body" id="isiKategori"> </div>
         </div>
     </div>
     </div>
@@ -63,9 +33,6 @@
             </button>
         </div>
             <div class="modal-body">
-                <form action="{{route('kategori-add')}}" method="POST">
-                    <!-- selipkan token untuk kirim data type post -->
-                    @csrf
                     <div class="form-group">
                         <label for="">Nama Kategori</label>
                         <input type="hidden" id="kategori_id" name="kategori_id">
@@ -73,30 +40,23 @@
                     </div>
                    
                     <div align="right"></div>
-                    <button type="submit" class="btn btn-outline-primary">Save</button>
-                    <button type="submit" class="btn btn-outline-warning">Reset</button>
-                </form>
+                    <button type="button" onclick="save()" class="btn btn-outline-primary">Save</button>
+                    <button type="button" onclick="kosong()" class="btn btn-outline-warning">Reset</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="kosong()" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- fungsi untuk menampilkan/hidden dan set interval status dengan menggunakan bootstrap alert  -->
-@if(session('pesan'))
+<!-- load javascript to index with ajax -->
 <script>
-    $('#pesan').show()
-    setInterval(function() {
-        $('#pesan').hide()
-    }, 4000);
-</script>
-@endif
+    $(document).ready(function() {
+        $('#isiKategori').load('/data-kategori')
+    })
 
-<!-- fungsi untuk menambah data dengan menggunakan jquery -->
-<script>
+    // fungsi untuk menambah data dengan pop up modal bootstrap
     function add() 
     {
         $('#kategoriAdd').modal();
@@ -109,6 +69,84 @@
         document.getElementById('kategori_id').value = id;
         document.getElementById('kategori_nama').value = nama;
         $('#kategoriAdd').modal()
+    } 
+
+    // fungsi untuk menyimpan dan mengubah data ke index dengan menggunakan ajax dan jquery
+    function save() 
+    {
+        var kategori_id = $('#kategori_id').val()
+        var kategori_nama = $('#kategori_nama').val()
+
+        $.ajax({
+            url : '/kategori-simpan',
+            type : 'POST',
+            data : {
+                '_token' : '{{ csrf_token() }}',
+                'kategori_id' : kategori_id,
+                'kategori_nama' : kategori_nama,
+            },
+            dataType : "JSON",
+            success : function(data) {
+                $('#kategoriAdd').modal('hide')
+                $('#isiKategori').load('/data-kategori')
+                toastr.success(data.message, data.title, {
+                    delay: 5000,
+                    fadeOut: 4000,
+                });
+                kosong()
+            }
+        })
+    } 
+
+    // fungsi untuk clear data
+    function kosong() 
+    {
+        $('#kategori_id').val('')
+        $('#kategori_nama').val('')
+    } 
+
+    // fungsi untuk menghapus data menggunakan sweet alert dan toast js
+    function deleteConfirmation(kategori_id) {
+        swal({
+            title: "Hapus?",
+            text: "Anda yakin ingin menghapus data ini?",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Ya, Hapus!",
+            cancelButtonText: "Tidak, Batalkan!",
+            reverseButtons: !0
+        }).then(function (e) {
+
+            if (e.value === true) {
+                // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    type: 'POST',
+                    url: "{{url('/hapus')}}/" + kategori_id,
+                    data: {'_token': '{{ csrf_token() }}'},
+                    dataType: 'JSON',
+                    success: function (data) {
+                        console.log(data)
+                        if (data.success === true) {
+                            swal("Done!", data.message, "success");
+                        } else {
+                            swal("Error!", data.message, "error");
+                        }
+                        $('#isiKategori').load('/data-kategori')
+                        toastr.success(data.message, data.title, {
+                            delay: 5000,
+                            fadeOut: 4000,
+                        }); 
+                    }
+                });
+
+            } else {
+                e.dismiss;
+            }
+
+        }, function (dismiss) {
+            return false;
+        })
     }
 </script>
 @endsection

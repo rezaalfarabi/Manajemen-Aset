@@ -26,6 +26,7 @@ class AsetController extends Controller
                         ->join('tb_satuan', 'tb_satuan.satuan_id', 'tb_aset.satuan_id')
                         ->join('tb_departement', 'tb_departement.departement_id', 'tb_aset.departement_id')
                         ->get();
+                        // dd($data['aset']);
         return view('backend.page.dataaset.datatable',$data);
     }
 
@@ -34,7 +35,7 @@ class AsetController extends Controller
         $data['kategori'] = DB::table('tb_kategori')->get();
         $data['departement'] = DB::table('tb_departement')->get();
         $data['satuan'] = DB::table('tb_satuan')->get();
-        // dd($data['aset']);
+        // dd($data['kategori']);
         return view('backend.page.dataaset.index', $data);
     }
 
@@ -49,30 +50,26 @@ class AsetController extends Controller
                 return redirect('data-aset')
                         ->withErrors($validator)
                         ->withInput();
-            }else{
+            } else {
                 $simpan = DB::table('tb_aset')->insert([
                     'nama_aset' => $r->nama_aset, 
                     'serial_number' => $r->serial_number,
                     'kategori_id' => $r->kategori_id,
-                    'tanggal_pembuatan' => $r->tanggal_pembuatan,
+                    'tahun_pengadaan' => $r->tahun_pengadaan,
                     'qty' => $r->qty,
                     'satuan_id' => $r->satuan_id,
                     'nama_pegawai' => $r->nama_pegawai,
                     'departement_id' => $r->departement_id,
-                    'status' => 0
+                    'status' => 1
                 ]);
     
                 if($simpan == true) 
                 {
-                    echo json_encode(['status' => 200]);
-                    // return back()->with('pesan', 'Data Berhasil Disimpan');
-                } else {
-                    echo json_encode(['status' => 400]);
-                    // return back()->with('pesan', 'Data Gagal Disimpan');
+                    $message = array('message' => 'Success!', 'title' => 'Data Aset berhasil ditambahkan');
+                    return response()->json($message);
                 }
             }
         } else {
-
             $validator = Validator::make($r->all(), $this->rule);
             if($validator->fails())
             {
@@ -84,7 +81,7 @@ class AsetController extends Controller
                     'nama_aset' => $r->nama_aset, 
                     'serial_number' => $r->serial_number,
                     'kategori_id' => $r->kategori_id,
-                    'tanggal_pembuatan' => $r->tanggal_pembuatan,
+                    'tahun_pengadaan' => $r->tahun_pengadaan,
                     'qty' => $r->qty,
                     'satuan_id' => $r->satuan_id,
                     'nama_pegawai' => $r->nama_pegawai,
@@ -93,36 +90,56 @@ class AsetController extends Controller
     
                 if($update == true) 
                 {
-                    echo json_encode(['status' => 200]);
-                    // return back()->with('pesan', 'Data Berhasil Diubah');
-                } else {
-                    echo json_encode(['status' => 400]);
-                    // return back()->with('pesan', 'Data Gagal Diubah');
+                    $message = array('message' => 'Success!', 'title' => 'Data Aset berhasil diubah');
+                    return response()->json($message);
                 }
             }
         }
     }
 
-    public function status($id, $status) 
+    public function status(Request $r) 
     {
-        $update = DB::table('tb_aset')->where('id_aset', $id)->update(['status' => $status]);
+        $id_aset = $r->id_aset;
+        $status = $r->status;
+
+        $update = DB::table('tb_aset')->where('id_aset', $id_aset)->update(['status' => $status]);
         if($update == true) 
             {
-                return back()->with('pesan', 'Status Update');
-            } else {
-                return back()->with('pesan', 'Error');
+                $message = array('message' => 'Success!', 'title' => 'Status berhasil diubah');
+                return response()->json($message);
             }
     }
 
-    public function hapus(Request $r) 
+    // public function hapus($id_aset)
+    // {
+    //     $hapus = DB::table('tb_aset')->where('id_aset', $id_aset)->delete();
+    //     // check data deleted or not
+    //     if ($hapus !== null) {
+    //         $success = true;
+    //         $message = "Data berhasil dihapus";
+            
+    //     } else {
+    //         $success = true;
+    //         $message = "Data tidak ditemukan";
+    //     }
+
+    //     //  Return response
+    //     return response()->json([
+    //         'success' => $success,
+    //         'message' => $message,
+    //     ]); 
+    // }
+
+    public function hapus(Request $r)
     {
         $id_aset = $r->id_aset;
+
         $hapus = DB::table('tb_aset')->where('id_aset', $id_aset)->delete();
+
         if($hapus == true) 
-        {
-            echo json_encode(['status' => 200]);
-        } else {
-            echo json_encode(['status' => 400]);
+        { 
+            $message = array('message' => 'Success!', 'title' => 'Data berhasil dihapus');
+            return response()->json($message);
         }
     }
 }

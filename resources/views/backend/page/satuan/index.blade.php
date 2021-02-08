@@ -3,11 +3,6 @@
 @section('content')
     <div class="row py-2">
         <div class="col-md-12">
-        @if(session('pesan'))
-            <div style="display:none" id="pesan" class="alert alert-success">
-            {{session('pesan')}}
-            </div>
-        @endif
         <div class="card card-outline card-primary">
             <div class="card-header">
                 
@@ -20,32 +15,7 @@
                 </div>
             </div>
 
-            <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped table-response">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Satuan</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($satuan as $no => $satuan)
-                        <tr>
-                            <td>{{$no+1}}</td>
-                            <td>{{$satuan->satuan_nama}}</td>
-                            <td>
-                                <button onclick="update(
-                                    '{{$satuan->satuan_id}}',
-                                    '{{$satuan->satuan_nama}}'
-                                )" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</button>
-                                <a href="{{route('delete-satuan', encrypt($satuan->satuan_id))}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <div class="card-body" id="isiSatuan"></div>
         </div>
     </div>
     </div>
@@ -63,9 +33,6 @@
             </button>
         </div>
             <div class="modal-body">
-                <form action="{{route('satuan-add')}}" method="POST">
-                    <!-- selipkan token untuk kirim data type post -->
-                    @csrf
                     <div class="form-group">
                         <label for="">Nama Satuan</label>
                         <input type="hidden" id="satuan_id" name="satuan_id">
@@ -73,29 +40,23 @@
                     </div>
                    
                     <div align="right"></div>
-                    <button type="submit" class="btn btn-outline-primary">Save</button>
-                    <button type="submit" class="btn btn-outline-warning">Reset</button>
-                </form>
+                    <button type="button" onclick="save()" class="btn btn-outline-primary">Save</button>
+                    <button type="button" onclick="kosong()" class="btn btn-outline-warning">Reset</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="kosong()" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- fungsi untuk menampilkan dan hidden notifikasi -->
-@if(session('pesan'))
-<script>
-    $('#pesan').show()
-    setInterval(function() {
-        $('#pesan').hide()
-    }, 3000);
-</script>
-@endif
 
-<!-- fungsi untuk menambah data dengan menggunakan jquery -->
 <script>
+    $(document).ready(function() {
+        $('#isiSatuan').load('/data-satuan')
+    })
+
+    // fungsi untuk membuat pop up modal bootstrap
     function add() 
     {
         $('#satuanAdd').modal();
@@ -108,6 +69,50 @@
         document.getElementById('satuan_id').value = id;
         document.getElementById('satuan_nama').value = nama;
         $('#satuanAdd').modal()
+    } 
+
+    function save() 
+    {
+        var satuan_id = $('#satuan_id').val()
+        var satuan_nama = $('#satuan_nama').val() 
+
+        $.ajax({
+            url : '/satuan-simpan',
+            type : 'POST',
+            data : {
+                '_token' : '{{ csrf_token() }}',
+                'satuan_id' : satuan_id,
+                'satuan_nama' : satuan_nama
+            },
+            dataType : 'JSON',
+            success : function(data) {
+                console.log(data)
+                    $('#satuanAdd').modal('hide')
+                    $('#isiSatuan').load('/data-satuan')
+                    kosong()
+            }
+        })
+    } 
+
+    function hapus(satuan_id) {
+        $.ajax({
+            url : '/satuan-hapus',
+            type : 'POST',
+            data : {
+                '_token' : '{{ csrf_token() }}',
+                'satuan_id' : satuan_id
+            },
+            dataType : 'JSON',
+            success : function(data) {
+                console.log(data)
+                    $('#isiSatuan').load('/data-satuan')
+            }
+        })
+    }
+
+    function kosong() {
+        $('#satuan_id').val('')
+        $('#satuan_nama').val('')
     }
 </script>
 @endsection

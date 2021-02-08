@@ -1,196 +1,131 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
-    <title>Login | Administrator</title>
+	<title>Login | Administrator</title>
+   <!--Made with love by Mutiullah Samim -->
+   <style>
+       /* Made with love by Mutiullah Samim*/
 
-    <style>
-        body {
-    color: #000;
-    overflow-x: hidden;
-    height: 100%;
-    background-color: #B0BEC5;
-    background-repeat: no-repeat
-}
+        @import url('https://fonts.googleapis.com/css?family=Numans');
 
-.card0 {
-    box-shadow: 0px 4px 8px 0px #757575;
-    border-radius: 0px
-}
+        html,body{
+        background-image: url('https://www.tomswallpapers.com/pic/201502/2560x1440/tomswallpapers.com-1374.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        font-family: 'Numans', sans-serif;
+        }
 
-.card2 {
-    margin: 0px 40px
-}
+        .container{
+        height: 100%;
+        align-content: center;
+        }
 
-.logo {
-    width: 200px;
-    height: 100px;
-    margin-top: 20px;
-    margin-left: 35px
-}
+        .card{
+        height: 370px;
+        margin-top: auto;
+        margin-bottom: auto;
+        width: 400px;
+        background-color: rgba(0,0,0,0.5) !important;
+        }
 
-.image {
-    width: 360px;
-    height: 280px
-}
+        .card-header h3{
+        color: white;
+        }
 
-.border-line {
-    border-right: 1px solid #EEEEEE
-}
+        .input-group-prepend span{
+        width: 50px;
+        background-color: #FFC312;
+        color: black;
+        border:0 !important;
+        }
 
-.line {
-    height: 1px;
-    width: 45%;
-    background-color: #E0E0E0;
-    margin-top: 10px
-}
+        input:focus{
+        outline: 0 0 0 0  !important;
+        box-shadow: 0 0 0 0 !important;
 
-.or {
-    width: 10%;
-    font-weight: bold
-}
+        }
 
-.text-sm {
-    font-size: 14px !important
-}
+        .remember{
+        color: white;
+        }
 
-::placeholder {
-    color: #BDBDBD;
-    opacity: 1;
-    font-weight: 300
-}
+        .remember input
+        {
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+        margin-right: 5px;
+        }
 
-:-ms-input-placeholder {
-    color: #BDBDBD;
-    font-weight: 300
-}
+        .login_btn{
+        color: black;
+        background-color: #FFC312;
+        width: 100px;
+        
+        }
 
-::-ms-input-placeholder {
-    color: #BDBDBD;
-    font-weight: 300
-}
+        .login_btn:hover{
+        color: black;
+        background-color: white;
+        }
 
-input,
-textarea {
-    padding: 10px 12px 10px 12px;
-    border: 1px solid lightgrey;
-    border-radius: 2px;
-    margin-bottom: 5px;
-    margin-top: 2px;
-    width: 100%;
-    box-sizing: border-box;
-    color: #2C3E50;
-    font-size: 14px;
-    letter-spacing: 1px
-}
+        .links{
+        color: white;
+        }
 
-input:focus,
-textarea:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    border: 1px solid #304FFE;
-    outline-width: 0
-}
+        .links a{
+        margin-left: 4px;
+        }
+   </style>
+   
+	<!--Bootsrap 4 CDN-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
-button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline-width: 0
-}
-
-a {
-    color: inherit;
-    cursor: pointer
-}
-
-.btn-blue {
-    background-color: #1A237E;
-    width: 150px;
-    color: #fff;
-    border-radius: 2px
-}
-
-.btn-blue:hover {
-    background-color: blue;
-    color: #fff;
-    cursor: pointer
-}
-
-.bg-blue {
-    color: #fff;
-    background-color: #1A237E
-}
-
-@media screen and (max-width: 991px) {
-    .logo {
-        margin-left: 0px
-    }
-
-    .image {
-        width: 300px;
-        height: 220px
-    }
-
-    .border-line {
-        border-right: none
-    }
-
-    .card2 {
-        border-top: 1px solid #EEEEEE !important;
-        margin: 0px 15px
-    }
-}
-    </style>
-
+	<!--Custom styles-->
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-<div id="login">
-<div class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
-    <div class="card card0 border-0">
-        <div class="row d-flex">
-            <div class="col-lg-6">
-            <form id="login-form" action="{{ route('aksilogin') }}" method="POST">
-            @csrf
-                <div class="card1 pb-5">
-                    <div class="row"> <img src="https://cdn-2.tstatic.net/tribunnewswiki/foto/bank/images/logo-kementerian-ppnbappenas.jpg" class="logo"> </div>
-                    <div class="row px-3 justify-content-center mt-4 mb-5 "> <img src="https://i.imgur.com/uNGdWHi.png" class="image"> </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-6">
-                <div class="card2 card border-0 px-4 py-5">
-                    <div class="row mb-4 px-3">
-                        <h3 class="mb-0 mr-4 mt-2">Authentication</h3>
-                    </div>
-                    <div class="row px-3"> <label class="mb-1">
-                            <h6 class="mb-0 text-sm">Username</h6>
-                        </label> <input class="mb-4" type="text" name="username" id="username" placeholder="Enter a valid Username " required> 
-                    </div>
-                    <div class="row px-3"> <label class="mb-1">
-                            <h6 class="mb-0 text-sm">Password</h6>
-                        </label> <input type="password" name="password" id="password" placeholder="Enter password" required>
-                   </div>
-                    <div class="row px-3 mb-4">
-                    </div>
-                    <div class="row mb-3 px-3"> <button type="submit" class="btn btn-blue text-center">Login</button> 
-                    </div>
-                </div>
-            </div>
-        </div>
-        </form>
-        <div class="bg-blue py-4">
-            <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2021 PUSDATIN. All rights reserved.</small>
-                <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span class="fa fa-google-plus mr-4 text-sm"></span> <span class="fa fa-linkedin mr-4 text-sm"></span> <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span> </div>
-            </div>
-        </div>
+    <div id="login">
+    <div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="text-center mt-3">Login</h3>
+			</div>
+			<div class="card-body">
+				<form id="login-form" action="{{ route('aksilogin') }}" method="POST"> 
+                @csrf
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" name="username" id="username" class="form-control" placeholder="username">
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" name="password" id="password" class="form-control" placeholder="password">
+					</div>
+					<div class="form-group text-center mt-5">
+						<input type="submit" value="Login" class="btn login_btn">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
     </div>
-</div>
-</div>
 
 </body>
 </html>

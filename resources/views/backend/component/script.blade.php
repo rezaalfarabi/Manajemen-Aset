@@ -1,8 +1,9 @@
 <!-- jQuery min js -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- sweet alert -->
-<!-- <script src = "https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>  -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+<!-- toast alert -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

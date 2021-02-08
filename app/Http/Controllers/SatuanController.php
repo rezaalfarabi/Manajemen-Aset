@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 use DB;
 
 class SatuanController extends Controller
-{
+{ 
+    public function datatable() {
+        $data['satuan'] = DB::table('tb_satuan')->get();
+        return view('backend.page.satuan.dataSatuan', $data);
+    }
+
     public function index() 
     {
         $data['satuan'] = DB::table('tb_satuan')->get();
@@ -19,24 +24,36 @@ class SatuanController extends Controller
         if($id == '')
         {
             $save = DB::table('tb_satuan')->insert(['satuan_nama' => $r->satuan_nama]);
-            return back()->with('pesan', 'Data Berhasil Disimpan');
+            if($save == true) {
+                echo json_encode(['satuan' => 200]);
+            } else {
+                echo json_encode(['satuan' => 400]);
+            }
+            // return back()->with('pesan', 'Data Berhasil Disimpan');
         } else {
             $update = DB::table('tb_satuan')->where('satuan_id', $id)->update(['satuan_nama' => $r->satuan_nama]);
-            return back()->with('pesan', 'Data Berhasil Diubah');
+            if($update == true) {
+                echo json_encode(['satuan' => 200]);
+                // return back()->with('pesan', 'Data Berhasil Diubah');
+            } else {
+                echo json_encode(['satuan' => 400]);
+            }
         }
     }
 
-    public function delete($satuan_id)
+    public function hapus(Request $r)
     {
-        $id = decrypt($satuan_id);
+        $satuan_id = $r->satuan_id;
 
-        $delete = DB::table('tb_satuan')->where('satuan_id', $id)->delete();
+        $hapus = DB::table('tb_satuan')->where('satuan_id', $satuan_id)->delete();
 
-        if($delete == true) 
-        {
-            return back()->with('pesan', 'Data Berhasil Dihapus');
-        } else {
-            return back()->with('pesan', 'Data gagal Dihapus');
+        if($hapus == true) 
+        { 
+            if($hapus) {
+                echo json_encode(['satuan' => 200]);
+            } else {
+                echo json_encode(['satuan' => 400]);
+            }
         }
     }
 }

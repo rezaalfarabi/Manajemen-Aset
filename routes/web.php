@@ -27,8 +27,8 @@ Route::middleware(['sudah_login'])->group(function() {
 
     // kategori
     Route::get('/kategori', 'KategoriController@index')->name('kategori');
-    Route::post('/kategori-add', 'KategoriController@save')->name('kategori-add');
-    Route::get('/delete-kategori/{kategori_id}', 'KategoriController@delete')->name('delete-kategori');
+    Route::post('/kategori-simpan', 'KategoriController@save')->name('kategori-simpan');
+    Route::post('/hapus/{kategori_id}', 'KategoriController@hapus');
 
     // Departement
     Route::get('/departement', 'DepartementController@index')->name('departement');
@@ -37,19 +37,19 @@ Route::middleware(['sudah_login'])->group(function() {
 
     // Satuan Unit
     Route::get('/satuan', 'SatuanController@index')->name('satuan');
-    Route::post('/satuan-add', 'SatuanController@save')->name('satuan-add');
-    Route::get('/delete-satuan/{satuan_id}', 'SatuanController@delete')->name('delete-satuan');
+    Route::post('/satuan-simpan', 'SatuanController@save')->name('satuan-simpan');
+    Route::post('/satuan-hapus', 'SatuanController@hapus');
 
     // Data Aset
     Route::get('/data-aset', 'AsetController@index')->name('data-aset');
-    Route::post('/data-aset-hapus', 'AsetController@hapus');
-    Route::get('/data-aset-status/{id}/{status}', 'AsetController@status')->name('data-aset-status');
     Route::post('/data-aset-simpan', 'AsetController@save')->name('data-aset-simpan');
+    Route::post('/data-aset-status', 'AsetController@status');
+    Route::post('/data-aset-hapus', 'AsetController@hapus');
+
     // tampil data table
     Route::get('/data-table', 'AsetController@datatable');
-
-    
-    
+    Route::get('/data-kategori', 'KategoriController@datatable');
+    Route::get('/data-satuan', 'SatuanController@datatable');
 });
 
 

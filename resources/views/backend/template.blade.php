@@ -10,7 +10,6 @@
   <!-- Menu Navbar -->
   @include('backend.component.navbar')
   <!-- /.navbar -->
-  <br>
 
   <!-- Menu Sidebar / Navigator Menu -->
   @include('backend.component.menu')
