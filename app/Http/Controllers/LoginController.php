@@ -16,13 +16,13 @@ class LoginController extends Controller
     {
         $username = $request->input('username');
         $password = $request->input('password');
-        $data = DB::table('admin')->where('username', $username)->first();
-        if($data) {
-            $cek = \Hash::check($password, $data->password);
-            if($cek == true) {
-                $request->session()->put("id", $data->id);
+        $data = DB::table('tb_pegawai')->where('username', $username)->first();
+        if($data->username == $username) {
+            if(password_verify($password, $data->password)) {
+                $request->session()->put("id", $data->id_pegawai);
                 $request->session()->put("username", $data->username);
-                $request->session()->put("nama_lengkap", $data->nama_lengkap);
+                $request->session()->put("nama", $data->nama);
+                $request->session()->put("level", $data->level);
                 return redirect('/');
             } else {
                 return redirect()->back()->with('error', "Username / Password Salah");
@@ -36,7 +36,8 @@ class LoginController extends Controller
     {
         $request->session()->forget('id');
         $request->session()->forget('username');
-        $request->session()->forget('nama_lengkap');
+        $request->session()->forget('nama');
+        $request->session()->forget('level');
         return redirect('/');
     }
 }

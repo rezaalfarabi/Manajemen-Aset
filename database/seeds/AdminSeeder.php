@@ -14,10 +14,10 @@ class AdminSeeder extends Seeder
         $data = [
             [
                 "username" => "admin", 
-                "password" => Hash::make("admin"),
+                "password" => password_hash("admin",PASSWORD_DEFAULT),
                 "nama_lengkap" => "Administrator"
             ]
         ];
-        DB::table('admin')->insert($data);
+        DB::table('tb_pegawai')->insert($data);
     }
 }

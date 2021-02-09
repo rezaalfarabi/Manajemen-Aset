@@ -17,7 +17,7 @@ class CreatePegawaiModelsTable extends Migration
             $table->id('id_pegawai');
             $table->string('nama');
             $table->string('email');
-            $table->string('nik');
+            $table->integer('level');
             $table->string('username');
             $table->string('password');
             $table->string('ulangi_password');
