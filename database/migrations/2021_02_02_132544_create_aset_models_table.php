@@ -17,6 +17,7 @@ class CreateAsetModelsTable extends Migration
             $table->id('id_aset');
             $table->string('nama_aset');
             $table->string('serial_number')->nullable();
+            $table->integer('nup');
             $table->year('tahun_pengadaan')->nullable();
             $table->integer('kategori_id');
             $table->integer('qty');

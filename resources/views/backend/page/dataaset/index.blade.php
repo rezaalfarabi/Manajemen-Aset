@@ -54,13 +54,18 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="">NUP</label>
+                            <input type="number" name="nup" id="nup" class="form-control" placeholder="No Urut Pencatatan"> 
+                        </div>
+
+                        <div class="form-group">
                             <label for="">Qty</label>
                             <input type="number" name="qty" id="qty" class="form-control @error('qty') is-invalid @enderror" placeholder="Qty"> 
                         </div>
 
                         <div class="form-group">
-                            <label for="">Nama Pegawai</label>
-                            <input type="text" name="nama_pegawai" id="nama_pegawai" class="form-control" placeholder="Nama Pegawai"> 
+                            <label for="">Nama Penerima</label>
+                            <input type="text" name="nama_pegawai" id="nama_pegawai" class="form-control" placeholder="Nama Penerima"> 
                         </div>
                       </div>
                     <!-- kanan -->
@@ -68,7 +73,7 @@
                      <!-- <select id='date-dropdown'></select> -->
 
                         <div class="form-group">
-                            <label for="">Tahun Pembuatan</label>
+                            <label for="">Tahun Pengadaan</label>
                             <select name="tahun_pengadaan" id="tahun_pengadaan"  class="form-control">
                                 <option>-- Pilih --</option>
                             </select> 
@@ -141,12 +146,13 @@
     }
 
 // fungsi untuk mengubah data dengan menggunakan vanilla javascript
-    function update(id, nama_aset, serial_number, kategori, tahun_pengadaan, qty, satuan, nama_pegawai, departement) 
+    function update(id, nama_aset, serial_number, nup, kategori, tahun_pengadaan, qty, satuan, nama_pegawai, departement) 
     {
         // alert(nama)
         document.getElementById('id_aset').value = id;
         document.getElementById('nama_aset').value = nama_aset;
         document.getElementById('serial_number').value = serial_number;
+        document.getElementById('nup').value =  nup;
         document.getElementById('kategori_id').value = kategori;
         document.getElementById('tahun_pengadaan').value = tahun_pengadaan;
         document.getElementById('qty').value = qty;
@@ -162,6 +168,7 @@
         var id_aset = $('#id_aset').val()
         var nama_aset = $('#nama_aset').val()
         var serial_number = $('#serial_number').val()
+        var nup = $('#nup').val()
         var qty = $('#qty').val()
         var nama_pegawai = $('#nama_pegawai').val()
         var tahun_pengadaan = $('#tahun_pengadaan').val()
@@ -177,6 +184,7 @@
                 'id_aset': id_aset,
                 'nama_aset': nama_aset,
                 'serial_number': serial_number,
+                'nup' : nup,
                 'qty': qty,
                 'nama_pegawai': nama_pegawai,
                 'tahun_pengadaan': tahun_pengadaan,
@@ -206,6 +214,7 @@
         $('#nama_aset').val('')
         $('#serial_number').val('')
         $('#qty').val('')
+        $('#nup').val('')
         $('#nama_pegawai').val('')
         $('#tahun_pengadaan').val('')
         $('#kategori_id').val('')

@@ -5,11 +5,12 @@
             <th>No</th>
             <th>Nama Aset</th>
             <th>Serial Number</th>
+            <th>NUP</th>
             <th>Kategori</th>
             <th>Tahun Pengadaan</th>
             <th>Qty</th>
             <th>Satuan </th>
-            <th>Nama Pegawai</th>
+            <th>Nama Penerima</th>
             <th>Department/Lokasi</th>
             <th>Status</th>
             <th>Action</th>
@@ -21,6 +22,7 @@
             <td>{{$no+1}}</td>
             <td>{{$aset->nama_aset}}</td>
             <td>{{$aset->serial_number}}</td>
+            <td>{{$aset->nup}}</td>
             <td>{{$aset->kategori_nama}}</td>
             <td>{{$aset->tahun_pengadaan}}</td>
             <td>{{$aset->qty}}</td>
@@ -34,12 +36,12 @@
                 <button onclick="status('{{ $aset->id_aset }}', 0)" class="fa fa-check-circle badge badge-success"> Ready</button>   
                 @endif
             </td>
-            
             <td>
                 <button onclick="update(
                     '{{$aset->id_aset}}',
                     '{{$aset->nama_aset}}',
                     '{{$aset->serial_number}}',
+                    '{{ $aset->nup }}',
                     '{{$aset->kategori_id}}',
                     '{{$aset->tahun_pengadaan}}',
                     '{{$aset->qty}}',

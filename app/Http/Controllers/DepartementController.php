@@ -7,6 +7,12 @@ use DB;
 
 class DepartementController extends Controller
 {
+    public function datatable() 
+    {
+        $data['departement'] = DB::table('tb_departement')->get();
+        return view('backend.page.departement.dataDepartement', $data);
+    }
+
     public function index() 
     {
         $data['departement'] = DB::table('tb_departement')->get();
@@ -18,25 +24,59 @@ class DepartementController extends Controller
         $id = $r->departement_id;
         if($id == '') 
         {
-            $save = DB::table('tb_departement')->insert(['departement_nama' => $r->departement_nama]);
-            return back()->with('pesan', 'Data Berhasil Disimpan');
+            $save = DB::table('tb_departement')->insert(['departement_nama' => $r->departement_nama]); 
+            $message = array('message' => 'Success!', 'title' => 'Lokasi berhasil ditambahkan');
+                return response()->json($message);
+            // if($save == true) {
+            //     echo json_encode(['status' => 200]);
+            // } else {
+            //     echo json_encode(['status' => 400]);
+            // }
+            // return back()->with('pesan', 'Data Berhasil Disimpan');
         } else {
             $update = DB::table('tb_departement')->where('departement_id', $id)->update(['departement_nama' =>$r->departement_nama]);
-            return back()->with('pesan', 'Data Berhasil Diubah');
+            $message = array('message' => 'Success!', 'title' => 'Lokasi berhasil diubah');
+                return response()->json($message);
+            // if($update == true) {
+            //     echo json_encode(['status' => 200]);
+            // } else {
+            //     echo json_encode(['status' => 400]);
+            // }
+            // return back()->with('pesan', 'Data Berhasil Diubah');
         }
     }
 
-    public function delete($departement_id) 
+    public function hapus(Request $r)
     {
-        $id = decrypt($departement_id);
-        $delete = DB::table('tb_departement')->where('departement_id', $id)->delete();
+        $departement_id = $r->departement_id;
 
-        if($delete == true) 
-        {
-            return back()->with('pesan', 'Data Berhasil Dihapus');
-        } else {
-            return back()->with('pesan', 'Data Gagal Dihapus');
+        $hapus = DB::table('tb_departement')->where('departement_id', $departement_id)->delete();
+
+        if($hapus == true) 
+        { 
+            $message = array('message' => 'Success!', 'title' => 'Data berhasil dihapus');
+            return response()->json($message);
         }
     }
+
+    // public function hapus($departement_id)
+    // {
+    //     $delete = DB::table('tb_departement')->where('departement_id', $departement_id)->delete();
+    //     // check data deleted or not
+    //     if ($delete !== null) {
+    //         $success = true;
+    //         $message = "Data berhasil dihapus";
+            
+    //     } else {
+    //         $success = true;
+    //         $message = "Data tidak ditemukan";
+    //     }
+
+    //     //  Return response
+    //     return response()->json([
+    //         'success' => $success,
+    //         'message' => $message,
+    //     ]); 
+    // }
     
 }

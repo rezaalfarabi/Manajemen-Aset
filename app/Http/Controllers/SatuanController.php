@@ -25,18 +25,15 @@ class SatuanController extends Controller
         {
             $save = DB::table('tb_satuan')->insert(['satuan_nama' => $r->satuan_nama]);
             if($save == true) {
-                echo json_encode(['satuan' => 200]);
-            } else {
-                echo json_encode(['satuan' => 400]);
-            }
+                $message = array('message' => 'Success!', 'title' => 'Data satuan berhasil ditambahkan');
+                return response()->json($message);
+            } 
             // return back()->with('pesan', 'Data Berhasil Disimpan');
         } else {
             $update = DB::table('tb_satuan')->where('satuan_id', $id)->update(['satuan_nama' => $r->satuan_nama]);
             if($update == true) {
-                echo json_encode(['satuan' => 200]);
-                // return back()->with('pesan', 'Data Berhasil Diubah');
-            } else {
-                echo json_encode(['satuan' => 400]);
+                $message = array('message' => 'Success!', 'title' => 'Data satuan berhasil diubah');
+                return response()->json($message);
             }
         }
     }
@@ -49,11 +46,8 @@ class SatuanController extends Controller
 
         if($hapus == true) 
         { 
-            if($hapus) {
-                echo json_encode(['satuan' => 200]);
-            } else {
-                echo json_encode(['satuan' => 400]);
-            }
+            $message = array('message' => 'Success!', 'title' => 'Data berhasil dihapus');
+            return response()->json($message);
         }
     }
 }

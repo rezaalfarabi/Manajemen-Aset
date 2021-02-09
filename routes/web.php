@@ -32,8 +32,8 @@ Route::middleware(['sudah_login'])->group(function() {
 
     // Departement
     Route::get('/departement', 'DepartementController@index')->name('departement');
-    Route::post('/departement-add', 'DepartementController@save')->name('departement-add');
-    Route::get('/delete-departement/{departement_id}', 'DepartementController@delete')->name('delete-departement');
+    Route::post('/departement-simpan', 'DepartementController@save')->name('departement-simpan');
+    Route::post('departement-hapus', 'DepartementController@hapus');
 
     // Satuan Unit
     Route::get('/satuan', 'SatuanController@index')->name('satuan');
@@ -50,6 +50,7 @@ Route::middleware(['sudah_login'])->group(function() {
     Route::get('/data-table', 'AsetController@datatable');
     Route::get('/data-kategori', 'KategoriController@datatable');
     Route::get('/data-satuan', 'SatuanController@datatable');
+    Route::get('/data-departement', 'DepartementController@datatable');
 });
 
 

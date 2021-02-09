@@ -89,7 +89,11 @@
                 console.log(data)
                     $('#satuanAdd').modal('hide')
                     $('#isiSatuan').load('/data-satuan')
-                    kosong()
+                    toastr.success(data.message, data.title, {
+                    delay: 5000,
+                    fadeOut: 4000,
+                });
+                kosong()
             }
         })
     } 
@@ -106,6 +110,10 @@
             success : function(data) {
                 console.log(data)
                     $('#isiSatuan').load('/data-satuan')
+                    toastr.success(data.message, data.title, {
+                    delay: 5000,
+                    fadeOut: 4000,
+                });
             }
         })
     }

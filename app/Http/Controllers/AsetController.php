@@ -13,6 +13,7 @@ class AsetController extends Controller
         $this->rule = array(
             'nama_aset' => 'required', 
             'kategori_id' => 'required',
+            'nup' => 'required',
             'qty' => 'required',
             'satuan_id' => 'required',
             'departement_id' => 'required'
@@ -54,6 +55,7 @@ class AsetController extends Controller
                 $simpan = DB::table('tb_aset')->insert([
                     'nama_aset' => $r->nama_aset, 
                     'serial_number' => $r->serial_number,
+                    'nup' => $r->nup,
                     'kategori_id' => $r->kategori_id,
                     'tahun_pengadaan' => $r->tahun_pengadaan,
                     'qty' => $r->qty,
@@ -80,6 +82,7 @@ class AsetController extends Controller
                 $update = DB::table('tb_aset')->where('id_aset', $id)->update([
                     'nama_aset' => $r->nama_aset, 
                     'serial_number' => $r->serial_number,
+                    'nup' => $r->nup,
                     'kategori_id' => $r->kategori_id,
                     'tahun_pengadaan' => $r->tahun_pengadaan,
                     'qty' => $r->qty,

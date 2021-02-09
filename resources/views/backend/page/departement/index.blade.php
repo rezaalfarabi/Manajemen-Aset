@@ -3,11 +3,7 @@
 @section('content')
     <div class="row py-2">
         <div class="col-md-12">
-        @if(session('pesan'))
-            <div style="display:none" id="pesan" class="alert alert-success">
-            {{session('pesan')}}
-            </div>
-        @endif
+
         <div class="card card-outline card-primary">
             <div class="card-header">
                 
@@ -20,32 +16,7 @@
                 </div>
             </div>
 
-            <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped table-response">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Department</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($departement as $no => $departement)
-                        <tr>
-                            <td>{{$no+1}}</td>
-                            <td>{{$departement->departement_nama}}</td>
-                            <td>
-                                <button onclick="update(
-                                    '{{$departement->departement_id}}',
-                                    '{{$departement->departement_nama}}'
-                                )" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</button>
-                                <a href="{{route('delete-departement', encrypt($departement->departement_id))}}" class="btn btn-danger btn-sm" onclick="return confirm('Yakin mau dihapus ?')"><i class="fa fa-trash"></i> Delete</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <div class="card-body" id="isiDepartement"></div>
         </div>
     </div>
     </div>
@@ -63,9 +34,6 @@
             </button>
         </div>
             <div class="modal-body">
-                <form action="{{route('departement-add')}}" method="POST">
-                    <!-- selipkan token untuk kirim data type post -->
-                    @csrf
                     <div class="form-group">
                         <label for="">Nama Department</label>
                         <input type="hidden" id="departement_id" name="departement_id">
@@ -73,43 +41,134 @@
                     </div>
                    
                     <div align="right"></div>
-                    <button type="submit" class="btn btn-outline-primary">Save</button>
-                    <button type="submit" class="btn btn-outline-warning">Reset</button>
-                </form>
+                    <button type="button" onclick="save()" class="btn btn-outline-primary">Save</button>
+                    <button type="button" onclick="kosong()" class="btn btn-outline-warning">Reset</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="kosong()" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- fungsi untuk menampilkan/hidde status dan set interval dengan menggunakan bootstrap alert -->
-@if(session('pesan'))
 <script>
-    $('#pesan').show()
-    setInterval(function() {
-        $('#pesan').hide()
-    }, 4000);
-</script>
-@endif
+    $(document).ready(function() {
+        $('#isiDepartement').load('/data-departement')
+    })
 
-<!-- fungsi untuk menambah data dengan menggunakan jquery -->
-<script>
+    // fungsi untuk menambah dengan menampilkan pop up windows bootstrap
     function add() 
     {
         $('#departementAdd').modal();
     }
 
-// fungsi untuk mengubah data dengan menggunakan vanilla javascript
+    // fungsi untuk mengubah data dengan menggunakan vanilla javascript
     function update(id, nama) 
     {
         // alert(nama)
         document.getElementById('departement_id').value = id;
         document.getElementById('departement_nama').value = nama;
         $('#departementAdd').modal()
+    } 
+
+    // fungsi untuk menambah data dengan menggunakan ajax jquery
+    function save() {
+        var departement_id = $('#departement_id').val()
+        var departement_nama = $('#departement_nama').val()
+
+        $.ajax({
+            url : '/departement-simpan',
+            type : 'POST',
+            data : {
+                '_token' : '{{ csrf_token() }}',
+                'departement_id' : departement_id,
+                'departement_nama' : departement_nama,
+            },
+            dataType : 'JSON',
+            success : function(data) {
+                $('#departementAdd').modal('hide')
+                $('#isiDepartement').load('/data-departement')
+                toastr.success(data.message, data.title, {
+                    delay: 5000,
+                    fadeOut: 4000,
+                });
+                kosong();
+            }
+        })
+    } 
+
+    // fungsi untuk clear data
+    function kosong() {
+        $('#departement_id').val('')
+        $('#departement_nama').val('')
+    } 
+
+    // fungsi untuk menghapus data menggunakan ajax dan jquery
+    function hapus(departement_id) {
+        $.ajax({
+            url : '/departement-hapus',
+            type : 'POST',
+            data : {
+                '_token' : '{{ csrf_token() }}',
+                'departement_id' : departement_id
+            },
+            dataType : 'JSON',
+            success : function(data) {
+                console.log(data)
+                toastr.success(data.message, data.title, {
+                            delay: 5000,
+                            fadeOut: 4000,
+                        }); 
+                $('#isiDepartement').load('/data-departement')
+            }
+        })
     }
+
+    // fungsi untuk menghapus data menggunakan ajax dan jquery dan notofikasi menggunakan sweet alert
+    // function deleteConfirmation(departement_id) {
+    //     swal({
+    //         title: "Hapus?",
+    //         text: "Anda yakin ingin menghapus data ini?",
+    //         type: "warning",
+    //         showCancelButton: !0,
+    //         confirmButtonText: "Ya, Hapus!",
+    //         cancelButtonText: "Tidak, Batalkan!",
+    //         reverseButtons: !0
+    //     }).then(function (e) {
+
+    //         if (e.value === true) {
+    //             // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    //             $.ajax({
+    //                 type: 'POST',
+    //                 url: "{{url('/hapus')}}/" + departement_id,
+    //                 data: {'_token': '{{ csrf_token() }}'},
+    //                 dataType: 'JSON',
+    //                 success: function (data) {
+    //                     console.log(data)
+    //                     if (data.success === true) {
+    //                         swal("Done!", data.message, "success");
+    //                     } else {
+    //                         swal("Error!", data.message, "error");
+    //                     }
+    //                     $('#isiDepartement').load('/data-departement')
+    //                     toastr.success(data.message, data.title, {
+    //                         delay: 5000,
+    //                         fadeOut: 4000,
+    //                     }); 
+    //                 }
+    //             });
+
+    //         } else {
+    //             e.dismiss;
+    //         }
+
+    //     }, function (dismiss) {
+    //         return false;
+    //     })
+    // }
+
 </script>
 @endsection
 
