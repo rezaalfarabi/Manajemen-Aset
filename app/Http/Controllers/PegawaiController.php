@@ -26,22 +26,12 @@ class PegawaiController extends Controller
             if($r->password == $r->ulangi_password)
             {
                 $pass = password_hash($r->password,PASSWORD_DEFAULT);
-                // input eloquent
-
-                // $input = new PegawaiModel();
-                // $input->nama = $r->nama;
-                // $input->email = $r->email;
-                // $input->nik = $r->nik;
-                // $input->username = $r->username;
-                // $input->password = $pass;
-                // $input->ulangi_password = $r->password;
-                // $input->save();
 
                 // input builder
                 DB::table('tb_pegawai')->insert([
                     'nama' => $r->nama,
                     'email' => $r->email,
-                    'nik' => $r->nik,
+                    'level' => $r->level,
                     'username' => $r->username,
                     'password' => $pass,
                     'ulangi_password' => $r->password
@@ -59,19 +49,12 @@ class PegawaiController extends Controller
             // cek apakah ada perubahan password..jika tidak simpan tanpa edit password
             if($r->password == '') 
             {
-                // update eloquent
-                // $edit = PegawaiModel::findOrFail($id);
-                // $edit->nama = $r->nama;
-                // $edit->email = $r->nama;
-                // $edit->nik = $r->nama;
-                // $edit->username = $r->nama;
-                // $edit->update();
 
                 // update query builder
                 DB::table('tb_pegawai')->where('id_pegawai', $id)->update([
                     'nama' => $r->nama,
                     'email' => $r->email,
-                    'nik' => $r->nik,
+                    'level' => $r->level,
                     'username' => $r->username
                 ]);
                 // jika user edit password baru maka simpan dengan password baru
@@ -80,20 +63,12 @@ class PegawaiController extends Controller
                 if($r->password == $r->ulangi_password) 
                 {
                     $pass = password_hash($r->password,PASSWORD_DEFAULT);
-                    // $edit = PegawaiModel::findOrFail($id);
-                    // $edit->nama = $r->nama;
-                    // $edit->email = $r->nama;
-                    // $edit->nik = $r->nama;
-                    // $edit->username = $r->nama;
-                    // $edit->password = $r->pass;
-                    // $edit->ulangi_password = $r->password;
-                    // $edit->update();
 
                      // update query builder
                 DB::table('tb_pegawai')->where('id_pegawai', $id)->update([
                     'nama' => $r->nama,
                     'email' => $r->email,
-                    'nik' => $r->nik,
+                    'level' => $r->level,
                     'username' => $r->username,
                     'password' => $pass,
                     'ulangi_password' => $r->password,

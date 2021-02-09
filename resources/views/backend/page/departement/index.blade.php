@@ -106,25 +106,46 @@
 
     // fungsi untuk menghapus data menggunakan ajax dan jquery
     function hapus(departement_id) {
-        $.ajax({
-            url : '/departement-hapus',
-            type : 'POST',
-            data : {
-                '_token' : '{{ csrf_token() }}',
-                'departement_id' : departement_id
-            },
-            dataType : 'JSON',
-            success : function(data) {
-                console.log(data)
-                toastr.success(data.message, data.title, {
-                            delay: 5000,
-                            fadeOut: 4000,
-                        }); 
-                $('#isiDepartement').load('/data-departement')
+        swal({
+            title: "Hapus?",
+            text: "Anda yakin ingin menghapus data ini?",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "Ya, Hapus!",
+            cancelButtonText: "Tidak, Batalkan!",
+            reverseButtons: !0
+        }).then(function (e) {
+
+            if (e.value === true) {
+                // var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    url : '/departement-hapus',
+                    type : 'POST',
+                    data : {
+                        '_token' : '{{ csrf_token() }}',
+                        'departement_id' : departement_id
+                    },
+                    dataType : 'JSON',
+                    success : function(data) {
+                        console.log(data)
+                        toastr.success(data.message, data.title, {
+                                    delay: 5000,
+                                    fadeOut: 4000,
+                                }); 
+                        $('#isiDepartement').load('/data-departement')
+                    }
+                })
+
+            } else {
+                e.dismiss;
             }
+
+        }, function (dismiss) {
+            return false;
         })
     }
-
+ 
     // fungsi untuk menghapus data menggunakan ajax dan jquery dan notofikasi menggunakan sweet alert
     // function deleteConfirmation(departement_id) {
     //     swal({

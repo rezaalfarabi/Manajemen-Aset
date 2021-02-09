@@ -24,7 +24,7 @@
                             <th>No</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Nik</th>
+                            <th>Level</th>
                             <th>Username</th>
                             <th>Action</th>
                         </tr>
@@ -35,7 +35,15 @@
                             <td>{{$no+1}}</td>
                             <td>{{$pegawai->nama}}</td>
                             <td>{{$pegawai->email}}</td>
-                            <td>{{$pegawai->nik}}</td>
+                            <td>
+                                @if($pegawai->level == 1)
+                                <strong>Superadmin</strong>
+                                @elseif($pegawai->level == 2)
+                                <strong>Teknisi</strong>
+                                @else
+                                <strong>User</strong>
+                                @endif
+                            </td>
                             <td>{{$pegawai->username}}</td>
                             <!-- edit data -->
                             <td>
@@ -43,7 +51,7 @@
                                     '{{$pegawai->id_pegawai}}',
                                     '{{$pegawai->nama}}',
                                     '{{$pegawai->email}}',
-                                    '{{$pegawai->nik}}',
+                                    '{{$pegawai->level}}',
                                     '{{$pegawai->username}}'
                                 )" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i> Edit</button>
                                 <!-- hapus data -->
@@ -62,7 +70,7 @@
 
 <!-- Modal -->
 <div id="pegawaiAdd" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
 
         <!-- Modal content-->
         <div class="modal-content">
@@ -76,37 +84,51 @@
                 <form action="{{route('add-pegawai')}}" method="POST">
                     <!-- selipkan token untuk kirim data type post -->
                     @csrf
-                    <div class="form-group">
-                        <label for="">Nama</label>
-                        <input type="hidden" id="id" name="id_pegawai">
-                        <input type="text" name="nama" id="nama" class="form-control" required>
-                    </div>
+                    <div class="row">
+                    <!-- kiri -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Nama</label>
+                                <input type="hidden" id="id" name="id_pegawai">
+                                <input type="text" name="nama" id="nama" class="form-control" required>
+                            </div>
 
-                    <div class="form-group">
-                        <label for="">Email</label>
-                        <input type="text" name="email" id="email" class="form-control" required>
-                    </div>
+                            <div class="form-group">
+                                <label for="">Email</label>
+                                <input type="text" name="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Password</label>
+                                <input type="password" name="password" id="password" class="form-control" >
+                            </div>
 
-                    <div class="form-group">
-                        <label for="">NIK</label>
-                        <input type="number" name="nik" id="nik" class="form-control" required>
+                            
+                        </div>
+                        <!-- kanan -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Username</label>
+                                <input type="text" name="username" id="username" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Level</label>
+                                <select name="level" id="level" class="form-control">
+                                    <option value="">--Level--</option>
+                                    <option value="1">Superadmin</option>
+                                    <option value="2">Teknisi</option>
+                                    <option value="3">User</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Ulangi Password</label>
+                                <input type="password" name="ulangi_password" id="ulangi_password" class="form-control" >
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="">Username</label>
-                        <input type="text" name="username" id="username" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Password</label>
-                        <input type="password" name="password" id="password" class="form-control" >
-                    </div>
-                    <div class="form-group">
-                        <label for="">Ulangi Password</label>
-                        <input type="password" name="ulangi_password" id="ulangi_password" class="form-control" >
-                    </div>
-                    <div align="right"></div>
-                    <button type="submit" class="btn btn-outline-primary">Save</button>
-                    <button type="submit" class="btn btn-outline-warning">Reset</button>
+                    <div align="right">
+                        <button type="submit" class="btn btn-outline-primary">Save</button>
+                        <button type="submit" class="btn btn-outline-warning">Reset</button>
+                    </div> 
                 </form>
             </div>
             <div class="modal-footer">
@@ -132,12 +154,12 @@
         $('#pegawaiAdd').modal()
     }
 
-    function edit(id, nama, email, nik, username)
+    function edit(id, nama, email, level, username)
     {
         $('#id').val(id)
         $('#nama').val(nama)
         $('#email').val(email)
-        $('#nik').val(nik)
+        $('#level').val(level)
         $('#username').val(username)
         $('#pegawaiAdd').modal()
     }
