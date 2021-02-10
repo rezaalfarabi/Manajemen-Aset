@@ -64,6 +64,13 @@ class AsetController extends Controller
                     'departement_id' => $r->departement_id,
                     'status' => 1
                 ]);
+
+                // rekap activity
+                DB::table('tb_activity')->insert([
+                    'id_pegawai' => session('id'),
+                    'tanggal' => date('Y-m-d H:i:s'),
+                    'activity' => 'Create Data Aset'
+                ]);
     
                 if($simpan == true) 
                 {
@@ -90,6 +97,13 @@ class AsetController extends Controller
                     'nama_pegawai' => $r->nama_pegawai,
                     'departement_id' => $r->departement_id,
                 ]);
+
+                // rekap activity
+                DB::table('tb_activity')->insert([
+                    'id_pegawai' => session('id'),
+                    'tanggal' => date('Y-m-d H:i:s'),
+                    'activity' => 'Update Data Aset'
+                ]);
     
                 if($update == true) 
                 {
@@ -104,7 +118,12 @@ class AsetController extends Controller
     {
         $id_aset = $r->id_aset;
         $status = $r->status;
-
+        // rekap activity
+        DB::table('tb_activity')->insert([
+            'id_pegawai' => session('id'),
+            'tanggal' => date('Y-m-d H:i:s'),
+            'activity' => 'Change Status'
+        ]);
         $update = DB::table('tb_aset')->where('id_aset', $id_aset)->update(['status' => $status]);
         if($update == true) 
             {
@@ -118,7 +137,12 @@ class AsetController extends Controller
         $id_aset = $r->id_aset;
 
         $hapus = DB::table('tb_aset')->where('id_aset', $id_aset)->delete();
-
+        // rekap activity
+        DB::table('tb_activity')->insert([
+            'id_pegawai' => session('id'),
+            'tanggal' => date('Y-m-d H:i:s'),
+            'activity' => 'Delete Data Aset'
+        ]);
         if($hapus == true) 
         { 
             $message = array('message' => 'Success!', 'title' => 'Data berhasil dihapus');

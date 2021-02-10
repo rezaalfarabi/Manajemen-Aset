@@ -13,7 +13,14 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{session('nama')}}</a>
+          <a href="#" class="d-block">{{session('nama')}} <span class="float-right"><i class="fa fa-online"></i></a> </span>
+          @if(session('level') == 1)
+          <!-- <i class="d-ilock" style="color:white">Superadmin</i> -->
+          @elseif(session('level') == 2)
+          <i class="d-block" style="color:white">Teknisi</i>
+          @elseif(session('level') == 3)
+          <i class="d-block" style="color:white">User</i>
+          @endif
         </div>
       </div>
 
