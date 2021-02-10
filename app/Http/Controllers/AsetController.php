@@ -113,26 +113,6 @@ class AsetController extends Controller
             }
     }
 
-    // public function hapus($id_aset)
-    // {
-    //     $hapus = DB::table('tb_aset')->where('id_aset', $id_aset)->delete();
-    //     // check data deleted or not
-    //     if ($hapus !== null) {
-    //         $success = true;
-    //         $message = "Data berhasil dihapus";
-            
-    //     } else {
-    //         $success = true;
-    //         $message = "Data tidak ditemukan";
-    //     }
-
-    //     //  Return response
-    //     return response()->json([
-    //         'success' => $success,
-    //         'message' => $message,
-    //     ]); 
-    // }
-
     public function hapus(Request $r)
     {
         $id_aset = $r->id_aset;

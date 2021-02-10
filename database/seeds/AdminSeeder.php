@@ -13,9 +13,12 @@ class AdminSeeder extends Seeder
     {
         $data = [
             [
+                "nama" => "superadmin",
+                "email" => "admin@admin.com",
+                "level" => 1,
                 "username" => "admin", 
                 "password" => password_hash("admin",PASSWORD_DEFAULT),
-                "nama_lengkap" => "Administrator"
+                "ulangi_password" => "admin"
             ]
         ];
         DB::table('tb_pegawai')->insert($data);

@@ -6,12 +6,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     if(session('id') != '')
     {
-        return view('backend.home');
+        return redirect('home');
     }else{
         return redirect('login');
     }
-    });
+});
 
+Route::get('/home', 'HomeController@index')->name('home')->middleware('sudah_login');
 // Route::middleware(['belum_login'])->group(function() {
 // });
 
@@ -51,6 +52,19 @@ Route::middleware(['sudah_login'])->group(function() {
     Route::get('/data-kategori', 'KategoriController@datatable');
     Route::get('/data-satuan', 'SatuanController@datatable');
     Route::get('/data-departement', 'DepartementController@datatable');
+    Route::get('/data-type-permohonan', 'TypepermohonanController@datatable');
+    Route::get('/data-permohonan', 'PermohonanController@datatable');
+
+    // type permohonan
+    Route::get('/type-permohonan', 'TypepermohonanController@index')->name('type-permohonan');
+    Route::post('/type-permohonan-save', 'TypepermohonanController@save');
+    Route::post('/type-permohonan-hapus/{id}', 'TypepermohonanController@hapus');
+
+    // Data permohonan
+    Route::get('/permohonan', 'PermohonanController@index')->name('permohonan');
+    Route::post('/permohonan-simpan', 'PermohonanController@save');
+    Route::post('/permohonan-status', 'PermohonanController@status');
+    Route::post('/permohonan-hapus', 'PermohonanController@hapus');
 });
 
 

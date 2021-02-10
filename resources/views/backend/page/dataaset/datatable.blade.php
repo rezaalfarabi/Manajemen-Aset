@@ -13,7 +13,9 @@
             <th>Nama Penerima</th>
             <th>Department/Lokasi</th>
             <th>Status</th>
+            @if(session('level') == 1)
             <th>Action</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -36,6 +38,7 @@
                 <button onclick="status('{{ $aset->id_aset }}', 0)" class="fa fa-check-circle badge badge-success"> Ready</button>   
                 @endif
             </td>
+            @if(session('level') == 1)
             <td>
                 <button onclick="update(
                     '{{$aset->id_aset}}',
@@ -51,6 +54,7 @@
                 )" type="button" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i>Edit</button>
                 <button type="button" onclick="hapus('{{$aset->id_aset}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>
             </td>
+            @endif
         </tr>
     @endforeach
     </tbody>
