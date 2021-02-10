@@ -13,7 +13,7 @@
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{session('nama_lengkap')}}</a>
+          <a href="#" class="d-block">{{session('nama')}}</a>
         </div>
       </div>
 
@@ -43,6 +43,7 @@
               </p>
             </a>
           </li>
+          @if(session('level') == 1)
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
@@ -80,15 +81,32 @@
                   <p> Department</p>
                 </a>
               </li>
+              <!-- data type permohonan -->
+              <li class="nav-item">
+                <a href="{{route('type-permohonan')}}" class="nav-link">
+                <i class="nav-icon fas fa-file" aria-hidden="true"></i>
+                  <p> Type Permohonan</p>
+                </a>
+              </li>
             </ul>
              <ul class="nav nav-treeview">
             </ul>
           </li>
+          @endif
           <li class="nav-item">
-                <a href="{{route('data-aset')}}" class="nav-link">
-                <i class="nav-icon fas fa-desktop" aria-hidden="true"></i>
-                  <p>Data Aset</p>
-                </a>
+              <a href="{{route('data-aset')}}" class="nav-link">
+              <i class="nav-icon fas fa-desktop" aria-hidden="true"></i>
+                <p>Data Aset</p>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a href="{{route('permohonan')}}" class="nav-link">
+              <i class="nav-icon fas fa-file" aria-hidden="true"></i>
+                <p>Permohonan</p>
+                @if(session('status') == 2)
+                <span class="badge badge-warning">0</span>
+                @endif
+              </a>
           </li>
         </ul>
       </nav>
